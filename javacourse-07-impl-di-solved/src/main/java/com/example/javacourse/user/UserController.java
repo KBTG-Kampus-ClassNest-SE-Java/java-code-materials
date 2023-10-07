@@ -24,8 +24,10 @@ public class UserController {
 
     private final UserService userService;
 
-   public UserController(UserService userService) {
-        this.userService = userService;
+   public UserController() {
+       MailService mailService = new MailService("","");
+//       MailService mailService = new MockMailService("","");
+        this.userService = new UserService(mailService);
    }
 
     @GetMapping("")
