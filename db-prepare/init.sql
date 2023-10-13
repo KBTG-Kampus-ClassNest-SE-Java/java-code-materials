@@ -3,13 +3,15 @@ DROP TABLE IF EXISTS wallet CASCADE;
 DROP TABLE IF EXISTS profile CASCADE;
 
 CREATE TABLE profile (
-    email VARCHAR(255) PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
     name VARCHAR(255) NOT NULL
 );
 
+
 CREATE TABLE wallet (
     id SERIAL PRIMARY KEY,
-    wallet_name VARCHAR(255) NOT NULL,
+    wallet_name VARCHAR(255) UNIQUE NOT NULL,
     active BOOLEAN NOT NULL,
     profile_email VARCHAR(255) REFERENCES profile(email) ON DELETE CASCADE
 );
