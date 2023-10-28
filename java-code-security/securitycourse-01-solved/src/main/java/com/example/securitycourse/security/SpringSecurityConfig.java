@@ -27,7 +27,7 @@ public class SpringSecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         return http
-//                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) ->
                         requests
                                 .requestMatchers(HttpMethod.GET,"/member").hasAuthority("MEMBER_READ")
@@ -38,6 +38,11 @@ public class SpringSecurityConfig {
                 .addFilterBefore(new ApiKeyAuthFilter(), BasicAuthenticationFilter.class)
                 .httpBasic(withDefaults())
                 .build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
