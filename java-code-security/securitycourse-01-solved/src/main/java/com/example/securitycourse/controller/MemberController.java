@@ -14,6 +14,7 @@ public class MemberController {
     @GetMapping("")
     @PreAuthorize("hasAuthority('MEMBER_READ') or hasRole('ADMIN')")
     public String getResource() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return "Get Member Resource";
     }
 
