@@ -33,9 +33,7 @@ public class SpringSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) ->
                         requests
-//                                .requestMatchers(HttpMethod.GET,"/member").hasAnyRole("MEMBER","ADMIN")
-//                                .requestMatchers(HttpMethod.PUT,"/member").hasAnyRole("MEMBER","ADMIN")
-//                                .requestMatchers("/admin").hasAnyRole("ADMIN")
+                                .requestMatchers("/admin").hasAnyRole("ADMIN")
                                 .requestMatchers("/public/**").permitAll()
                                 .anyRequest()
                                 .authenticated())
@@ -55,6 +53,7 @@ public class SpringSecurityConfig {
 
         UserDetails user = User.withUsername("member1")
                 .password(encoder.encode("password"))
+                .authorities("MEMBER_READ")
                 .roles("MEMBER")
                 .build();
 

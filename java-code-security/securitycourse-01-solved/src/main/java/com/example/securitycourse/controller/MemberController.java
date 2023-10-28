@@ -11,18 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/member")
 public class MemberController {
-//    hasRole('ADMIN') or
     @GetMapping("")
+    @PreAuthorize("hasAuthority('MEMBER_READ') or hasRole('ADMIN')")
     public String getResource() {
         return "Get Member Resource";
     }
 
     @PutMapping("")
-    @PreAuthorize("hasRole('MEMBER')")
-//    @PreAuthorize("hasRole('ADMIN') or hasRole('MEMBER')")
     public String updateResource() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(authentication);
         return "Update Member Resource";
     }
 
