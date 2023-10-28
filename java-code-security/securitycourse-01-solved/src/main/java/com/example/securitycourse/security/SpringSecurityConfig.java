@@ -1,14 +1,18 @@
 package com.example.securitycourse.security;
 
+import com.example.securitycourse.authentication.AuthenticationUserDetailService;
 import com.example.securitycourse.security.ApiKeyAuthFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,6 +33,11 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableMethodSecurity(prePostEnabled = true)
 public class SpringSecurityConfig {
 
+    private final AuthenticationUserDetailService authenticationUserDetailService;
+    public SpringSecurityConfig(AuthenticationUserDetailService authenticationUserDetailService) {
+        this.authenticationUserDetailService = authenticationUserDetailService;
+    }
+
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -39,6 +48,7 @@ public class SpringSecurityConfig {
                                 .requestMatchers("/public/**").permitAll()
                                 .anyRequest()
                                 .authenticated())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(new ApiKeyAuthFilter(), BasicAuthenticationFilter.class)
                 .httpBasic(withDefaults())
                 .build();
@@ -50,16 +60,11 @@ public class SpringSecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetail() {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
-        CustomUserDetail user = new CustomUserDetail("member1", encoder.encode("password"));
-        user.setRoles(List.of("MEMBER"));
-        user.setPermissions(List.of("MEMBER_READ"));
-
-        CustomUserDetail admin = new CustomUserDetail("admin", encoder.encode("password"));
-        admin.setRoles(List.of("ADMIN"));
-
-        return new InMemoryUserDetailsManager(user, admin);
+    public AuthenticationProvider authenticationProvider() {
+        final DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(authenticationUserDetailService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        return authenticationProvider;
     }
+
 }
