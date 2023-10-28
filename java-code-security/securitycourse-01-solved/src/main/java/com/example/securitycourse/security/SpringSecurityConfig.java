@@ -32,6 +32,12 @@ public class SpringSecurityConfig {
                         requests
                                 .requestMatchers(HttpMethod.GET,"/member").hasAuthority("MEMBER_READ")
                                 .requestMatchers(HttpMethod.PUT,"/member").hasAuthority("MEMBER_UPDATE")
+
+//                                .requestMatchers(HttpMethod.GET,"/notes").hasAuthority("NOTE_READ")
+//                                .requestMatchers(HttpMethod.PUT,"/notes").hasAuthority("NOTE_UPDATE")
+//                                .requestMatchers(HttpMethod.DELETE,"/notes").hasAuthority("NOTE_DELETE")
+//                                .requestMatchers(HttpMethod.POST,"/notes").hasAuthority("NOTE_CREATE")
+
                                 .requestMatchers("/public/**").permitAll()
                                 .anyRequest()
                                 .authenticated())
@@ -51,9 +57,14 @@ public class SpringSecurityConfig {
 
         UserDetails user = User.withUsername("member1")
                 .password(encoder.encode("password"))
-                .authorities("MEMBER_READ", "MEMBER_UPDATE")
+                .authorities("MEMBER_READ", "MEMBER_UPDATE", "NOTE_READ", "NOTE_UPDATE", "NOTE_DELETE", "NOTE_CREATE")
                 .build();
 
-        return new InMemoryUserDetailsManager(user);
+        UserDetails admin = User.withUsername("admin")
+                .password(encoder.encode("password"))
+                .authorities("MEMBER_READ", "MEMBER_UPDATE", "NOTE_READ", "NOTE_UPDATE", "NOTE_DELETE", "NOTE_CREATE")
+                .build();
+
+        return new InMemoryUserDetailsManager(user, admin);
     }
 }
