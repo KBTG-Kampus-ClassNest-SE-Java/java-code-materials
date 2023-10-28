@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,14 +31,9 @@ public class SpringSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) ->
                         requests
-                                .requestMatchers(HttpMethod.GET,"/member").hasAuthority("MEMBER_READ")
-                                .requestMatchers(HttpMethod.PUT,"/member").hasAuthority("MEMBER_UPDATE")
-
-//                                .requestMatchers(HttpMethod.GET,"/notes").hasAuthority("NOTE_READ")
-//                                .requestMatchers(HttpMethod.PUT,"/notes").hasAuthority("NOTE_UPDATE")
-//                                .requestMatchers(HttpMethod.DELETE,"/notes").hasAuthority("NOTE_DELETE")
-//                                .requestMatchers(HttpMethod.POST,"/notes").hasAuthority("NOTE_CREATE")
-
+                                .requestMatchers(HttpMethod.GET,"/member").hasAnyRole("MEMBER","ADMIN")
+                                .requestMatchers(HttpMethod.PUT,"/member").hasAnyRole("MEMBER","ADMIN")
+                                .requestMatchers("/admin").hasAnyRole("ADMIN")
                                 .requestMatchers("/public/**").permitAll()
                                 .anyRequest()
                                 .authenticated())
@@ -57,12 +53,12 @@ public class SpringSecurityConfig {
 
         UserDetails user = User.withUsername("member1")
                 .password(encoder.encode("password"))
-                .authorities("MEMBER_READ", "MEMBER_UPDATE", "NOTE_READ", "NOTE_UPDATE", "NOTE_DELETE", "NOTE_CREATE")
+                .roles("MEMBER")
                 .build();
 
         UserDetails admin = User.withUsername("admin")
                 .password(encoder.encode("password"))
-                .authorities("MEMBER_READ", "MEMBER_UPDATE", "NOTE_READ", "NOTE_UPDATE", "NOTE_DELETE", "NOTE_CREATE")
+                .roles("ADMIN")
                 .build();
 
         return new InMemoryUserDetailsManager(user, admin);
