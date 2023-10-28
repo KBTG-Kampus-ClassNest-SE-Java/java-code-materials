@@ -19,6 +19,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import java.util.List;
+
 import static org.springframework.security.config.Customizer.withDefaults;
 
 
@@ -51,16 +53,12 @@ public class SpringSecurityConfig {
     public UserDetailsService userDetail() {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        UserDetails user = User.withUsername("member1")
-                .password(encoder.encode("password"))
-                .authorities("MEMBER_READ")
-                .roles("MEMBER")
-                .build();
+        CustomUserDetail user = new CustomUserDetail("member1", encoder.encode("password"));
+        user.setRoles(List.of("MEMBER"));
+        user.setPermissions(List.of("MEMBER_READ"));
 
-        UserDetails admin = User.withUsername("admin")
-                .password(encoder.encode("password"))
-                .roles("ADMIN")
-                .build();
+        CustomUserDetail admin = new CustomUserDetail("admin", encoder.encode("password"));
+        admin.setRoles(List.of("ADMIN"));
 
         return new InMemoryUserDetailsManager(user, admin);
     }
