@@ -1,20 +1,35 @@
 package com.example.javacourse.wallet;
 
+import com.example.javacourse.profile.Profile;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+@Entity
+@Table(name = "wallet")
 public class Wallet {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name;
 
-    private String email;
+    @Size(min = 3, max = 20)    @NotNull
 
-    public String getEmail() {
-        return email;
-    }
+    private String walletName;
 
-    public Wallet(Integer id, String name, String email) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
+    private Boolean active;
+
+    @ManyToOne
+    @JoinColumn(name = "profile_email", referencedColumnName = "email")
+    private Profile profile;
+
+    public Wallet() {
     }
 
     public Integer getId() {
@@ -25,11 +40,27 @@ public class Wallet {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getWalletName() {
+        return walletName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setWalletName(String walletName) {
+        this.walletName = walletName;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 }
