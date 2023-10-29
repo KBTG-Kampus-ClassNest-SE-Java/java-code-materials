@@ -1,5 +1,6 @@
 package com.example.securitycourse.authentication;
 
+import com.example.securitycourse.security.CustomUserDetail;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,7 +24,7 @@ public class AuthenticationUserDetailService implements UserDetailsService {
     }
 
     public String generateJwt(String username) {
-        UserDetails userDetail = userRepository.findUserByUsername(username);
+        CustomUserDetail userDetail = userRepository.findUserByUsername(username);
         return jwtService.generateToken(userDetail);
     }
 }
