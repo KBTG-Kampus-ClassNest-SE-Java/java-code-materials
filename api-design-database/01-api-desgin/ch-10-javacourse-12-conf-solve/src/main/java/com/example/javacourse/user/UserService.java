@@ -1,5 +1,6 @@
 package com.example.javacourse.user;
 
+import com.example.javacourse.mail.GoogleMailService;
 import com.example.javacourse.mail.MailService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,7 @@ public class UserService {
                     new User(3,"Miko", 22, false))
     );
 
-    private MailService mailService;
+    private final MailService mailService;
 
     public UserService(MailService mailService) {
         this.mailService = mailService;

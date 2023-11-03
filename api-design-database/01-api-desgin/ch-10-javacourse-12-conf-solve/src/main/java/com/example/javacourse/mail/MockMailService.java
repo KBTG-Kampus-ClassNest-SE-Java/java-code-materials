@@ -1,6 +1,6 @@
 package com.example.javacourse.mail;
 
-public class MockMailService extends MailService {
+public class MockMailService extends GoogleMailService {
 
     public MockMailService(String url, String port) {
 
