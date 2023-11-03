@@ -1,20 +1,18 @@
 package com.example.javacourse.order;
 
-import com.example.javacourse.mail.MailService;
+import com.example.javacourse.mail.GoogleMailService;
 
 public class OrderService {
 
-    private MailService mailService;
+	private GoogleMailService googleMailService;
 
-    public OrderService() {
-//        this.mailService = new MailService();
-        this.mailService = new MailService("mail.google.com", "41");
+	public OrderService() {
+		this.googleMailService = new GoogleMailService("mail.google.com", "41");
+	}
 
-    }
-
-    public void createOrder() {
+	public void createOrder() {
 //        create order
 //        send mail
-        mailService.sendEmail("", "");
-    }
+		googleMailService.sendEmail("", "");
+	}
 }
