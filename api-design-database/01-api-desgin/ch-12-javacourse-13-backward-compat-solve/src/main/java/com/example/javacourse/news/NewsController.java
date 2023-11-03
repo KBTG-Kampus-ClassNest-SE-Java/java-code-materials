@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/news")
+@RequestMapping("/api/v1/news")
 public class NewsController {
 
     @GetMapping(value = "/latest")
