@@ -8,4 +8,12 @@ public class Order {
 		this.id = id;
 		this.cart = cart;
 	}
+
+	@Override
+	public String toString() {
+		return "Order{" +
+			"id=" + id +
+			", cart=" + cart +
+			'}';
+	}
 }
