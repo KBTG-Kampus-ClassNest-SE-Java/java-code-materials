@@ -3,15 +3,18 @@ package com.example.javacourse.user;
 import com.example.javacourse.mail.GoogleMailService;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class UserService {
 
-	private List<User> userList = new ArrayList<>(List.of(new User(1, "Alice", 20, true), new User(2, "Mike", 22, true), new User(3, "Miko", 22, false)));
+	private List<User> userList = List.of(
+		new User(1, "Alice", 20, true),
+		new User(2, "Mike", 22, true),
+		new User(3, "Miko", 22, false)
+	);
 
-	private GoogleMailService googleMailService;
+	private final GoogleMailService googleMailService;
 
 	public UserService() {
 		this.googleMailService = new GoogleMailService();

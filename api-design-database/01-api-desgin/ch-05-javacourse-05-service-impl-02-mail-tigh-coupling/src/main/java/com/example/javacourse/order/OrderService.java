@@ -7,7 +7,9 @@ public class OrderService {
 	private GoogleMailService googleMailService;
 
 	public OrderService() {
-		this.googleMailService = new GoogleMailService("mail.google.com", "41");
+		this.googleMailService = new GoogleMailService();
+		this.googleMailService.setMailServer("mail.google.com");
+		this.googleMailService.setPort("41");
 	}
 
 	public void createOrder() {
