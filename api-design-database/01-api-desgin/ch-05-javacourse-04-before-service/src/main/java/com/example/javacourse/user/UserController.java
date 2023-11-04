@@ -27,8 +27,10 @@ public class UserController {
     );
 
     @GetMapping("")
-    public List<User> getUserList() {
-        return users;
+    public List<User> getUserList(@RequestParam("active") Optional<Boolean> active) {
+        return active.map(aBoolean -> users.stream()
+                .filter(user -> user.getActive().equals(aBoolean))
+                .collect(Collectors.toList())).orElseGet(() -> users);
     }
 
     @PostMapping("")

@@ -65,3 +65,18 @@ public class UserController {
 
 record UserRequestDto(String name, Integer age) {}
 ```
+
+## Additional
+```java
+@RestController
+@RequestMapping("/api/users")
+class UserController {
+    
+    @GetMapping("")
+    public List<User> getUserList(@RequestParam("active") Optional<Boolean> active) {
+        return active.map(aBoolean -> users.stream()
+                .filter(user -> user.getActive().equals(aBoolean))
+                .collect(Collectors.toList())).orElseGet(() -> users);
+    }
+}
+```
