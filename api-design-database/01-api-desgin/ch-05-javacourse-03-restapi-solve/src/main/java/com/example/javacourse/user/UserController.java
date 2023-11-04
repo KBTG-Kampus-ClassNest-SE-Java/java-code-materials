@@ -37,16 +37,13 @@ public class UserController {
                 .map(User::getId)
                 .max(Integer::compareTo);
         int nextId = maxId.orElse(0) + 1;
-
         User user = new User(nextId,requestDto.name(), requestDto.age(), false);
-
         users.add(user);
         return user;
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
-//        User user = users.stream().filter(user -> !user.getId().equals(id)).findFirst();
         users.removeIf(user1 -> user1.getId().equals(id));
     }
 

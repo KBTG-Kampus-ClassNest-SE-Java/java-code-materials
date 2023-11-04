@@ -93,11 +93,30 @@ record UserRequestDto(String name, Integer age) {}
 @RequestMapping("/api/users")
 class UserController {
     
+    // /api/users?active=true
     @GetMapping("")
     public List<User> getUserList(@RequestParam("active") Optional<Boolean> active) {
         return active.map(aBoolean -> users.stream()
                 .filter(user -> user.getActive().equals(aBoolean))
                 .collect(Collectors.toList())).orElseGet(() -> users);
     }
+
+    // /api/users?name=Alice
+    @GetMapping("")
+    public List<User> getUserList(@RequestParam("name") Optional<String> name) {
+        return name.map(s -> users.stream()
+                .filter(user -> user.getName().equals(s))
+                .collect(Collectors.toList())).orElseGet(() -> users);
+    }
+
+    // /api/users?name=Alice&active=true
+    @GetMapping("")
+    public List<User> getUserList(@RequestParam("name") Optional<String> name, @RequestParam("active") Optional<Boolean> active) {
+        return users.stream()
+                .filter(user -> name.isEmpty() || user.getName().equals(name.get()))
+                .filter(user -> active.isEmpty() || user.getActive().equals(active.get()))
+                .collect(Collectors.toList());
+    }
+    
 }
 ```
