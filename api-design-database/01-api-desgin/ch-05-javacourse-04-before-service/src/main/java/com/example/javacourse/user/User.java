@@ -3,7 +3,6 @@ package com.example.javacourse.user;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
-//    @JsonProperty("user_name")
 
     @JsonProperty("id")
     private Integer id;

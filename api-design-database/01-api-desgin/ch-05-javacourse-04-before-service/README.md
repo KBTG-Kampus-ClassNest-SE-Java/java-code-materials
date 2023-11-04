@@ -1,3 +1,5 @@
+## UserController
+```java
 package com.example.javacourse.user;
 
 import jakarta.websocket.server.PathParam;
@@ -62,3 +64,4 @@ public class UserController {
 }
 
 record UserRequestDto(String name, Integer age) {}
+```
