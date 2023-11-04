@@ -10,9 +10,9 @@ public class UserController {
 
     private final UserService userService;
 
-   public UserController() {
+    public UserController() {
         this.userService = new UserService();
-   }
+    }
 
     @GetMapping("")
     public List<User> getUserList() {
@@ -36,4 +36,5 @@ public class UserController {
 
 }
 
-record UserRequestDto(String name, Integer age) {}
+record UserRequestDto(String name, Integer age) {
+}
