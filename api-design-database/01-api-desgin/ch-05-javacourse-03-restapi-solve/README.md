@@ -1,4 +1,4 @@
-## Step 1: Create Users
+## Step 1: Create User
 ```java
 package com.example.javacourse.user;
 
@@ -19,7 +19,7 @@ public class User {
 }
 ```
 
-## Step 2: Create UserController
+## Step 2: Create UserController (Read)
 ```java
 package com.example.javacourse.user;
 
@@ -53,6 +53,32 @@ public class UserController {
     public List<User> getUserList() {
         return users;
     }
+}
+```
+
+## Step 3: Create UserController (Create) and DTO
+```java
+package com.example.javacourse.user;
+
+import jakarta.websocket.server.PathParam;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@RestController
+@RequestMapping("/api/users")
+public class UserController {
 
     @PostMapping("")
     public User createUser(@RequestBody UserRequestDto requestDto) {
@@ -67,11 +93,35 @@ public class UserController {
         return user;
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
-        users.removeIf(user1 -> user1.getId().equals(id));
-    }
+}
 
+record UserRequestDto(String name, Integer age) {}
+```
+
+## Step 4: Create UserController (Update)
+```java
+package com.example.javacourse.user;
+
+import jakarta.websocket.server.PathParam;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@RestController
+@RequestMapping("/api/users")
+public class UserController {
+    
     @PutMapping("/{id}")
     public void editUser(@PathVariable Integer id, @RequestBody UserRequestDto requestDto) {
         for (User user: users) {
@@ -81,11 +131,43 @@ public class UserController {
             }
         }
     }
+}
+```
+
+## Step 5: Create UserController (Delete)
+```java
+package com.example.javacourse.user;
+
+import jakarta.websocket.server.PathParam;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@RestController
+@RequestMapping("/api/users")
+public class UserController {
+    
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Integer id) {
+        users.removeIf(user1 -> user1.getId().equals(id));
+    }
 
 }
-
-record UserRequestDto(String name, Integer age) {}
 ```
+
+
+
 
 ## Optional Step
 ```java
