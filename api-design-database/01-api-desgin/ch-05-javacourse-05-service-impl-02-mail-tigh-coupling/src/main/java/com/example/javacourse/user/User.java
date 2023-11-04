@@ -3,8 +3,6 @@ package com.example.javacourse.user;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
-//    @JsonProperty("user_name")
-
     @JsonProperty("id")
     private Integer id;
     private String name;
@@ -30,14 +28,6 @@ public class User {
         return name;
     }
 
-//    public String getName() {
-//        return name;
-//    }
-
-//    public String getUserName() {
-//        return name;
-//    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -53,10 +43,7 @@ public class User {
     public Boolean getActive() {
         return active;
     }
-//
-//    public Boolean isActive() {
-//        return active;
-//    }
+
     public void setActive(Boolean active) {
         this.active = active;
     }

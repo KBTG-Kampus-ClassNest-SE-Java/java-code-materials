@@ -4,17 +4,15 @@ import com.example.javacourse.mail.GoogleMailService;
 
 public class OrderService {
 
-	private GoogleMailService googleMailService;
+    private GoogleMailService googleMailService;
 
-	public OrderService() {
-		this.googleMailService = new GoogleMailService();
-		this.googleMailService.setMailServer("mail.google.com");
-		this.googleMailService.setPort("41");
-	}
+    public OrderService() {
+        this.googleMailService = new GoogleMailService();
+        this.googleMailService.setMailServer("mail.google.com");
+        this.googleMailService.setPort("41");
+    }
 
-	public void createOrder() {
-//        create order
-//        send mail
-		googleMailService.sendEmail("", "");
-	}
+    public void createOrder() {
+        googleMailService.sendEmail("", "");
+    }
 }

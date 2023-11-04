@@ -16,7 +16,7 @@ public class UserController {
 
     @GetMapping("")
     public List<User> getUserList() {
-        return userService.getUserList();
+        return userService.getUsers();
     }
 
     @PostMapping("")
